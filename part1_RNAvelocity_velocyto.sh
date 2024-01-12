@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 # # RNA Velocity analysis using velocyto, Seurat, and scVelo (Part 1: velocyto)
