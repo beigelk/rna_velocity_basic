@@ -4,6 +4,10 @@ subtitle:  "Extract data from Seurat to merge with Loom file for scVelo RNA velo
 author: "Katherine Beigel (beigelk@chop.edu)"
 ---
 
+# Saving Seurat object as h5ad
+
+This script does not include any Seurat processing steps. The "WT_Seurat.rds" input file is expected to be a fully processed Seurat object (with UMAP, clustering, etc.).
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 # main
@@ -18,7 +22,7 @@ library(cowplot)
 
 ```
 
-### Set the directory for where to read/write data files
+## Set the directory for where to read/write data files
 
 ```{r Directories}
 
@@ -27,7 +31,7 @@ outdir <- "/dir/where/to/write/outputfiles/to/"
 
 ```
 
-### Load the RDS file from Sabine Schenider's R project
+## Load the RDS file
 
 ```{r Load rds Seurat file}
 
@@ -42,7 +46,7 @@ DimPlot(seu, group.by = "cell_type", label = TRUE)
 
 ```
 
-### Save the Seurat object as a h5Seurat, convert to .h5ad
+## Save the Seurat object as a h5Seurat, convert to .h5ad
 Vignette: https://mojaveazure.github.io/seurat-disk/articles/convert-anndata.html
 
 ```{r Convert Seurat to .h5ad, eval = FALSE}
