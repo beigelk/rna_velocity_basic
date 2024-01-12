@@ -1,0 +1,54 @@
+﻿---
+title: "RNA Velocity analysis using velocyto, Seurat, and scVelo (Part 2: Seurat data)""
+subtitle:  "Extract data from Seurat to merge with Loom file for scVelo RNA velocity"
+author: "Katherine Beigel (beigelk@chop.edu)"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# main
+library(tidyverse)
+library(Seurat)
+library(SeuratDisk)
+library(viridis)
+library(ggplot2)
+library(scales)
+library(mgsub)
+library(cowplot)
+
+```
+
+### Set the directory for where to read/write data files
+
+```{r Directories}
+
+datadir <- "/dir/where/to/load/SeuratObj/from/"
+outdir <- "/dir/where/to/write/outputfiles/to/"
+
+```
+
+### Load the RDS file from Sabine Schenider's R project
+
+```{r Load rds Seurat file}
+
+seu <- readRDS(file = paste0(datadir, "WT_Seurat.rds"))
+
+# Optional: if you need to subset the object to only look at some cells
+# Idents(object = seu) <- "orig.ident"
+# seu <- subset(seu, idents = "WT_sub")
+
+# Check to see how the UMAP plot looks
+DimPlot(seu, group.by = "cell_type", label = TRUE)
+
+```
+
+### Save the Seurat object as a h5Seurat, convert to .h5ad
+Vignette: https://mojaveazure.github.io/seurat-disk/articles/convert-anndata.html
+
+```{r Convert Seurat to .h5ad, eval = FALSE}
+
+# Uses pkg SeuratDisk
+SaveH5Seurat(seu, filename = paste0(outdir, "WT_seurat.h5Seurat"))
+Convert(paste0(outdir, "WT_seurat.h5Seurat"), dest = "h5ad") # this file will be used in Part 3: scVelo RNA velocity
+
+```
